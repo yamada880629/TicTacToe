@@ -5,7 +5,7 @@ public class TicTacToe {
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);	
 		initBoard();
-		String result ="";
+		boolean result =false;
 		String mark = "O";
 		printBoard();
 		System.out.println("Please input like A0, B1, etc.");
@@ -31,13 +31,14 @@ public class TicTacToe {
 				}
 			}
 			printBoard();
-			result = getResult();
-			if(!result.equals("n")){
-				System.out.println("The Winner is : "+result);
+			result = checkWinner();
+			if(result==true){
+				String winner = (i%2 == 0) ? "O" : "X";
+				System.out.println("The Winner is : "+ winner);
 				break;				
 			}
 		}
-		if(result.equals("n")){
+		if(result==false){
 			System.out.println("Draw!");
 		}
 	}		
@@ -71,17 +72,16 @@ public class TicTacToe {
 			System.out.println("  +---+---+---+");						
 		}		
 	}
-	//if(board[0][0]==board[0][1]&&board[0][0]==board[0][2]) return true;
-	//代表board[0][0]win 
-	public static String getResult(){
+	public static boolean checkWinner(){
+		boolean ret =false;
 		for(int i=0;i<3;i++){
-			if(board[i][0]!=" "&&board[i][0]==board[i][1]&&board[i][0]==board[i][2]) return board[i][0];
+			if(board[i][0]!=" "&&board[i][0]==board[i][1]&&board[i][0]==board[i][2]) ret = true;
 			
-			else if(board[0][i]!=" "&&board[0][i]==board[1][i]&&board[0][i]==board[2][i]) return board[0][i];
+			else if(board[0][i]!=" "&&board[0][i]==board[1][i]&&board[0][i]==board[2][i]) ret = true;
 		}
-		if(board[0][0]!=" "&&board[0][0]==board[1][1]&&board[0][0]==board[2][2]) return board[0][0];
-		else if(board[0][2]!=" "&&board[0][2]==board[1][1]&&board[0][2]==board[2][0]) return board[0][2];
-		else return "n";
+		if(board[0][0]!=" "&&board[0][0]==board[1][1]&&board[0][0]==board[2][2]) ret = true;
+		else if(board[0][2]!=" "&&board[0][2]==board[1][1]&&board[0][2]==board[2][0]) ret = true;
 		
+		return ret;
 	}
 }
